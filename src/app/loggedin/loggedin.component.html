@@ -1,0 +1,29 @@
+
+<nav class="navbar navbar-default navbar-expand-lg navbar-light">
+  <div class="navbar-header d-flex col">
+    <a class="navbar-brand" routerLink="/loggedin">Ahoj<b>Brasko</b></a>
+    <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle navbar-toggler ml-auto">
+      <span class="navbar-toggler-icon"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
+
+  <div id="navbarCollapse" class="collapse navbar-collapse">
+    <ul>
+      <a class="contact" routerLink="/loggedin">Contact</a>
+      <a class="cart" routerLink="/loggedin"><i class="fas fa-cart-arrow-down"></i></a>
+      <li>
+        <a><i class="fas fa-user-cog"></i></a>
+        <ul class="dropdown">
+          <a routerLink="/userinfo">User</a>
+          <li>
+            <a (click)="logoutClick()" routerLink="/home" class="">LogOut</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+

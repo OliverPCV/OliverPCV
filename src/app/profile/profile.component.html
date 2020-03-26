@@ -1,0 +1,85 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<nav class="navbar navbar-default navbar-expand-lg navbar-light">
+  <div class="navbar-header d-flex col">
+    <a class="navbar-brand" routerLink="/loggedin">Ahoj<b>Brasko</b></a>
+    <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle navbar-toggler ml-auto">
+      <span class="navbar-toggler-icon"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
+
+  <div id="navbarCollapse" class="collapse navbar-collapse">
+    <ul>
+      <a class="contact" routerLink="/loggedin">Contact</a>
+      <a class="cart" routerLink="/loggedin"><i class="fas fa-cart-arrow-down"></i></a>
+      <li>
+        <a><i class="fas fa-user-cog"></i></a>
+        <ul class="dropdown">
+          <a routerLink="/userinfo">User</a>
+          <li>
+            <a (click)="logoutClick()" routerLink="/home" class="">LogOut</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2 col-md-4">
+      <img src="https://i.redd.it/ftp1djf6e5i21.jpg"
+           alt="" class="img-rounded img-responsive"/>
+    </div>
+    <div class="col-sm-4 col-md-4">
+      <blockquote>
+        <p>{{user.username}}</p>
+      </blockquote>
+      <p> <i class="glyphicon glyphicon-envelope"></i> {{user.email}}
+        <br/> <i class="glyphicon glyphicon-globe"></i> {{user.id}}
+
+    </div>
+  </div>
+</div>
+<br>
+<br>
+  <div class="container">
+    <div class="post-comments">
+      <form>
+        <div class="form-group">
+          <label>Your Comment</label>
+          <textarea name="comment" class="form-control" rows="3" [(ngModel)]="com"></textarea>
+        </div>
+        <button type="submit" class="btn btn-default" (click)="sendComment()">Send</button>
+      </form>
+    </div>
+  </div>
+<br>
+<div class="container">
+  <h3>Your Comment</h3>
+<h4><strong>{{username}}</strong><button class="trashbtn" (click)="clickTrash()"><i class="fas fa-trash-alt" *ngIf="trash"></i></button></h4>
+<p>{{body}}</p>
+</div>
+<br>
+<div class="container" >
+  <h3>Other Comments</h3>
+
+  <br>
+
+  <div *ngFor="let username of comments">
+  <h4 ><strong>{{username.author_id.username}}</strong></h4>
+  <p >{{username.body}}</p>
+  </div>
+  <div class="username">
+
+  </div>
+
+
+</div>
+
