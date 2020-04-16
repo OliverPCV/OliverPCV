@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {AuthenticationService} from './services/authentication.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -9,12 +11,11 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class AppComponent {
   title = 'API';
+  myStorage = window.localStorage;
 
-  constructor(private http: HttpClient) {
-    const headers = new HttpHeaders();
-    const url = 'http://85.160.64.233:3000';
-    headers.append('Content-Type', 'application/json');
-    headers.append('client_id', '23');
+  constructor(private router: Router) {
+
+  }
 
 }
-}
+

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../services/user.service';
 import {User} from '../models/User.model';
 import {AuthenticationService} from '../services/authentication.service';
@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
   // tslint:disable-next-line:variable-name
   private trash = false;
   // tslint:disable-next-line:max-line-length
-  constructor(private activatedRoute: ActivatedRoute, private profile: UserService, private userlogout: AuthenticationService, private comment: CommentsService) {
+  constructor(private activatedRoute: ActivatedRoute, private profile: UserService, private userlogout: AuthenticationService, private comment: CommentsService, private router: Router) {
 
   }
 
@@ -45,6 +45,16 @@ export class ProfileComponent implements OnInit {
         });
       });
     });
+    if (localStorage.getItem('access-token')) {
+      console.log('Token tu je');
+      AuthenticationService.token.access_token = (localStorage.getItem('access-token'));
+      this.router.navigate(['/profile']);
+
+    } else {
+      console.log('Token tu neni');
+
+    }
+
   }
 
   sendComment() {
@@ -85,6 +95,7 @@ export class ProfileComponent implements OnInit {
   }
 
   logoutClick() {
+    localStorage.clear();
     this.userlogout.getLogout()
       .subscribe(
         (data: any) => {

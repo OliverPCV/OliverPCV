@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import Token from '../Token';
 import {UserService} from '../services/user.service';
 import {AuthenticationService} from '../services/authentication.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -12,24 +13,31 @@ import {AuthenticationService} from '../services/authentication.service';
 })
 export class LoggedinComponent implements OnInit {
 
-  constructor(private http: HttpClient, private userlogout: AuthenticationService) {
+  constructor(private http: HttpClient, private userlogout: AuthenticationService, public router: Router) {
 
   }
 
   ngOnInit() {
-    localStorage.setItem('User-Token', AuthenticationService.token.access_token);
+    if (localStorage.getItem('access-token')) {
+      console.log('Token tu je');
+      AuthenticationService.token.access_token = (localStorage.getItem('access-token'));
+      this.router.navigate(['/loggedin']);
+
+    } else {
+      console.log('Token tu neni');
+
+    }
   }
 
   logoutClick() {
+    localStorage.clear();
     this.userlogout.getLogout()
       .subscribe(
         (data: any) => {
 
           AuthenticationService.token.access_token = '';
 
-
-
-        }, (error) => {
+          }, (error) => {
 
         }
       );

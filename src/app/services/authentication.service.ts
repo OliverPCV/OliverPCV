@@ -37,5 +37,6 @@ export class AuthenticationService {
   setToken(token: Authentication) {
     console.log(token);
     AuthenticationService.token = token;
+
   }
 }

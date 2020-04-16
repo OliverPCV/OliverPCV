@@ -22,6 +22,7 @@ export class UserinfoComponent implements OnInit {
   private temparray = [];
   // tslint:disable-next-line:variable-name
   private page_count: number;
+  myStorage = window.localStorage;
 
   constructor(private http: HttpClient, private router: Router, private http2: HttpClient, private user: UserService, private auth: AuthenticationService, private userlogout: AuthenticationService) {
     console.log(AuthenticationService.token);
@@ -29,12 +30,26 @@ export class UserinfoComponent implements OnInit {
     this.user.getUser()
       .subscribe(
         (data: ReturnPage) => {
+
           this.users = data['users'];
           this.page_count = data.page_count + 1;
+
           console.log(this.users);
         }, (error) => {
         }
       );
+  }
+
+  ngOnInit() {
+    if (localStorage.getItem('access-token')) {
+      console.log('Token tu je');
+      AuthenticationService.token.access_token = (localStorage.getItem('access-token'));
+      this.router.navigate(['/userinfo']);
+
+    } else {
+      console.log('Token tu neni');
+
+    }
   }
 
   clickProfile(id: number) {
@@ -42,6 +57,7 @@ export class UserinfoComponent implements OnInit {
   }
 
   logoutClick() {
+    localStorage.clear();
     this.userlogout.getLogout()
       .subscribe(
         (data: User) => {
@@ -68,9 +84,4 @@ export class UserinfoComponent implements OnInit {
     );
     console.log(page);
   }
-
-
-  ngOnInit() {
-  }
-
 }
