@@ -14,7 +14,15 @@ export class AppComponent {
   myStorage = window.localStorage;
 
   constructor(private router: Router) {
+    if (localStorage.getItem('access-token')) {
+      console.log('Token tu je');
+      AuthenticationService.token.access_token = (localStorage.getItem('access-token'));
+      this.router.navigate(['/userinfo']);
 
+    } else {
+      console.log('Token tu neni');
+
+    }
   }
 
 }
