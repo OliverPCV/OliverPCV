@@ -25,6 +25,8 @@ export class ProfileComponent implements OnInit {
   private username: string;
   private id: number;
   // tslint:disable-next-line:variable-name
+  private page_count: number;
+  // tslint:disable-next-line:variable-name
   private trash = false;
   // tslint:disable-next-line:max-line-length
   constructor(private activatedRoute: ActivatedRoute, private profile: UserService, private userlogout: AuthenticationService, private comment: CommentsService) {
@@ -38,6 +40,7 @@ export class ProfileComponent implements OnInit {
         console.log(this.user);
         this.comment.getComments(this.user.id).subscribe( ( data: CommentsModel) => {
             this.comments = data['comments'];
+            this.page_count = data.page_count + 1;
             console.log(this.comments);
         });
       });
@@ -47,7 +50,6 @@ export class ProfileComponent implements OnInit {
   sendComment() {
     this.comment.getComment(this.com, this.user.id).subscribe(
         (data: CommentsModel) => {
-
           this.trash = true;
           this.body = data.body;
           this.user_id = data.user_id;
@@ -65,13 +67,29 @@ export class ProfileComponent implements OnInit {
         this.trash = false;
       });
   }
+  get pageCount(): IterableIterator<number> {
+    return new Array(this.page_count).keys();
+  }
+
+  loadPage(page: number) {
+    this.comment.getPage(page, this.user.id).subscribe(
+      (data: User) => {
+        this.comments = data['comments'];
+        this.page_count = data.page_count + 1;
+
+      }, (error) => {
+
+      }
+    );
+    console.log(page);
+  }
 
   logoutClick() {
     this.userlogout.getLogout()
       .subscribe(
         (data: any) => {
           AuthenticationService.token.access_token = '';
-          console.log(Token.access);
+
           }, (error) => {
         }
       );

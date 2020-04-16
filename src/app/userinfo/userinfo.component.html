@@ -36,10 +36,16 @@
     <tbody>
     <tr *ngFor="let user of users">
       <td><button (click)="clickProfile(user.id)" class="profilbutton">{{user.username}}</button></td>
+
     </tr>
     </tbody>
   </table>
 </div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination pg-blue">
+    <li class="page-item" *ngFor="let i of pageCount"><a class="page-link" (click)="loadPage(i)">{{i + 1}}</a></li>
+  </ul>
+</nav>
 
 
 

@@ -16,6 +16,10 @@ export class LoggedinComponent implements OnInit {
 
   }
 
+  ngOnInit() {
+    localStorage.setItem('User-Token', AuthenticationService.token.access_token);
+  }
+
   logoutClick() {
     this.userlogout.getLogout()
       .subscribe(
@@ -23,7 +27,7 @@ export class LoggedinComponent implements OnInit {
 
           AuthenticationService.token.access_token = '';
 
-          console.log(Token.access);
+
 
         }, (error) => {
 
@@ -34,7 +38,6 @@ export class LoggedinComponent implements OnInit {
 
 
 
-  ngOnInit() {
-  }
+
 
 }

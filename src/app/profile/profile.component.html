@@ -76,9 +76,11 @@
   <h4 ><strong>{{username.author_id.username}}</strong></h4>
   <p >{{username.body}}</p>
   </div>
-  <div class="username">
-
-  </div>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination pg-blue">
+      <li class="page-item" *ngFor="let i of pageCount"><a class="page-link" (click)="loadPage(i)">{{i + 1}}</a></li>
+    </ul>
+  </nav>
 
 
 </div>

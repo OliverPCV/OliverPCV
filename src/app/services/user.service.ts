@@ -16,6 +16,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
 
+  getHeaders() {}
   getUser() {
     const headers = new HttpHeaders()
       .set('User-Token', AuthenticationService.token.access_token);
@@ -32,6 +33,13 @@ export class UserService {
     console.log(AuthenticationService.token.access_token);
     return this.http.get<User>('http://85.160.64.233:3000/user/' + id, {headers});
 
+  }
+
+  getPage(page: number) {
+    const headers = new HttpHeaders()
+      .set('User-Token', AuthenticationService.token.access_token);
+
+    return this.http.get<User>('http://85.160.64.233:3000/users/?page=' + page, {headers});
   }
 
 

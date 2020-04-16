@@ -14,37 +14,27 @@ import {ReturnPage} from '../../ReturnPage';
   templateUrl: './userinfo.component.html',
   styleUrls: ['./userinfo.component.scss']
 })
+
+
 export class UserinfoComponent implements OnInit {
 
-
   private users = [];
-
-   private temparray = [];
-
+  private temparray = [];
+  // tslint:disable-next-line:variable-name
+  private page_count: number;
 
   constructor(private http: HttpClient, private router: Router, private http2: HttpClient, private user: UserService, private auth: AuthenticationService, private userlogout: AuthenticationService) {
     console.log(AuthenticationService.token);
 
     this.user.getUser()
       .subscribe(
-      (data: ReturnPage) => {
-
-        const headers = new HttpHeaders()
-          .set('User-Token', AuthenticationService.token.access_token);
-
-        for (let i = 0; i < (data.page_count); i++) {
-          this.http.get<ReturnPage>('http://85.160.64.233:3000/users/?page=' + i, {headers}).subscribe(data => {
-            this.temparray = data.users.concat(this.temparray);
-            this.temparray.concat(this.users);
-
-            this.users = this.temparray;
-            console.log(this.users);
-          });
-        }
-        console.log(this.users);
+        (data: ReturnPage) => {
+          this.users = data['users'];
+          this.page_count = data.page_count + 1;
+          console.log(this.users);
         }, (error) => {
-      }
-    );
+        }
+      );
   }
 
   clickProfile(id: number) {
@@ -58,9 +48,25 @@ export class UserinfoComponent implements OnInit {
           AuthenticationService.token.access_token = '';
           console.log(AuthenticationService.token.access_token);
           }, (error) => {
-
         }
       );
+  }
+
+  get pageCount(): IterableIterator<number> {
+    return new Array(this.page_count).keys();
+  }
+
+  loadPage(page: number) {
+    this.user.getPage(page).subscribe(
+      (data: User) => {
+         this.users = data['users'];
+         this.page_count = data.page_count + 1;
+         console.log(this.users);
+      }, (error) => {
+
+      }
+    );
+    console.log(page);
   }
 
 
